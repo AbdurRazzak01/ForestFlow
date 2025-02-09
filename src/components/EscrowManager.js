@@ -1,387 +1,356 @@
 import React, { useState, useEffect } from "react";
-import { parseEther, formatUnits, isAddress } from "ethers";
-import { getGAEHEscrowContract, getMockStablecoinContract, getCurrentPrice, getProvider } from "../utils/contracts";
-import "../styles/EscrowManager.css"; // Import CSS file
-import Ai from "./Ai";
-
-
-const EscrowManager = ({ account }) => {
-  const [amount, setAmount] = useState("", "", "");
-  const [escrowId, setEscrowId] = useState("");
-  const [escrowDetails, setEscrowDetails] = useState(null);
-  const [priceData, setPriceData] = useState({ adjustedPrice: null, timestamp: null });
-  const [role, setRole] = useState("buyer"); // "buyer" or "seller" role toggle
-  const [isHovered, setIsHovered] = useState(false);
-
-  // Hardcoded seller address
-  const hardcodedSellerAddress = "0x3016DBeE1F9580638E2691546e8D2df1535B03be"; // replace with actual seller address
-
-  useEffect(() => {
-    const connectWallet = async () => {
-      const provider = getProvider();
-      await provider.send("eth_requestAccounts", []); // Request account access
-    };
-    connectWallet();
-  }, []);
-  const buttonStyle = {
-    background: 'linear-gradient(90deg, #5ce16b, #8c52ff)',
-    color: 'white',
-    border: 'none',
-    padding: '15px 10px', // Smaller padding for smaller buttons
-    fontSize: '1rem', // Smaller font size
-    borderRadius: '8px',
-    cursor: 'pointer',
-    margin: '5px',
-    transition: 'transform 0.3s ease',
-  };
-  const approveStablecoin = async () => {
-    if (!amount) return alert("Please enter a valid amount.");
-    
-    const stablecoinContract = await getMockStablecoinContract();
-    console.log("Stablecoin Contract Methods:", stablecoinContract.functions); // Debugging output
+import { parseEther, formatUnits } from "ethers";
+import { getForestFlowContract, getProvider } from "../utils/contracts";
+import "../styles/ForestManage.css";
+import ML_Model from "./ML_Model";
+import FlrUsdPrice from "./ForestFSTO";
+import CarbonProjects from "./FlareCarbonProjects";
+import CarbonIntensity from "./CarbonIntensity";
+import CarbonInten from "./FDCarbonIntensity";
   
-    try {
-      const tx = await stablecoinContract.approve(
-        process.env.REACT_APP_CONTRACT_ADDRESS,
-        parseEther(amount)
-      );
-      await tx.wait();
-      alert("Stablecoin Approved for Escrow Creation!");
-    } catch (error) {
-      console.error("Error approving stablecoin:", error);
-      alert("Stablecoin approval failed. Please try again.");
-    }
-  };
+  const ForestManage = ({ account }) => {
+    const [toggleMode, setToggleMode] = useState("Invest");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [carbonTokenBalance, setCarbonTokenBalance] = useState(0);
+    const [carbonTokenPrice, setCarbonTokenPrice] = useState(0);
+    const [investmentAmount, setInvestmentAmount] = useState("");
+    const [tokenAmount, setTokenAmount] = useState("");
+    const [projects, setProjects] = useState([]);
+    const [projectName, setProjectName] = useState("");
+    const [projectLocation, setProjectLocation] = useState("");
+    const [estimatedCO2, setEstimatedCO2] = useState("");
+    const [minInvestment, setMinInvestment] = useState("");
+    const [transactions, setTransactions] = useState([]);
+    const [totalInvestment, setTotalInvestment] = useState(0);
+    const projectImages = [
+      "/image copy 2.png",
+      "/tree1.png",
+      "/tree2.png",
+      "/tree3.png",
+    ];
+
+    useEffect(() => {
+      const fetchDetails = async () => {
+        try {
+          const contract = await getForestFlowContract();
+          if (!contract) return alert("Error: Contract not loaded");
   
-
-  const createEscrow = async () => {
-    if (!amount) return alert("Please enter a valid amount.");
-    if (!isAddress(hardcodedSellerAddress)) return alert("Invalid hardcoded seller address.");
+          const balance = await contract.carbonTokenBalance(account);
+          setCarbonTokenBalance(formatUnits(balance, 18));
   
-    const contract = await getGAEHEscrowContract();
-    console.log("Available contract functions:", contract.functions); // Log contract functions
-  
-    try {
-      const tx = await contract.createEscrow(hardcodedSellerAddress, parseEther(amount), { from: account });
-      await tx.wait();
-      alert("Escrow Created Successfully!");
-    } catch (error) {
-      console.error("Error creating escrow:", error);
-      alert("Escrow creation failed. Please try again.");
-    }
-  };
-  
-  const adjustPrice = async () => {
-    if (!escrowId) return alert("Please enter the escrow ID.");
-  
-    const contract = await getGAEHEscrowContract();
-    try {
-      // Convert escrowId to a number if it's stored as a string
-      const tx = await contract.adjustPrice(parseInt(escrowId));
-      await tx.wait();
-      alert("Price Adjusted Successfully!");
-    } catch (error) {
-      console.error("Error adjusting price:", error);
-      alert("Price adjustment failed. Please try again.");
-    }
-  };
-  
-
-
-  const fetchAndDisplayPrice = async () => {
-    try {
-      const { adjustedPrice, timestamp } = await getCurrentPrice();
-      setPriceData({ adjustedPrice, timestamp });
-      console.log(`Current Price: ${adjustedPrice}, Timestamp: ${timestamp}`);
-    } catch (error) {
-      console.error("Error fetching price:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAndDisplayPrice();
-  }, []);
-
-
-  const finalizeEscrow = async () => {
-    if (!escrowId) return alert("Please enter the escrow ID.");
-  
-    const contract = await getGAEHEscrowContract();
-    try {
-      // Fetch escrow details to check insurance status
-      const details = await contract.escrows(parseInt(escrowId));
-      if (!details.insuranceVerified) {  // Adjust the field name if needed
-        alert("Insurance must be verified before finalizing the escrow.");
-        return;
-      }
-  
-      const tx = await contract.finalizeEscrow(parseInt(escrowId));
-      await tx.wait();
-      alert("Escrow Finalized Successfully!");
-    } catch (error) {
-      console.error("Error finalizing escrow:", error);
-      alert(`Escrow finalization failed: ${error.reason || "Unknown error"}`);
-    }
-  };
-  
-
-  const cancelEscrow = async () => {
-    if (!escrowId) return alert("Please enter the escrow ID.");
-  
-    const contract = await getGAEHEscrowContract();
-    try {
-      // Convert escrowId to a number if it's stored as a string
-      const tx = await contract.cancelEscrow(parseInt(escrowId));
-      await tx.wait();
-      alert("Escrow Canceled Successfully!");
-    } catch (error) {
-      console.error("Error canceling escrow:", error);
-      alert("Escrow cancellation failed. Please try again.");
-    }
-  };
-  
-
-  const verifyInsurance = async () => {
-    if (!escrowId) return alert("Please enter the escrow ID.");
-  
-    const contract = await getGAEHEscrowContract();
-    try {
-      // Ensure that the escrow is adjusted before calling verifyInsurance
-      const details = await contract.escrows(parseInt(escrowId));
-      if (details.status !== "ADJUSTED") {
-        alert("Escrow must be adjusted before verifying insurance.");
-        return;
-      }
-  
-      const tx = await contract.verifyInsurance(parseInt(escrowId));
-      await tx.wait();
-      alert("Insurance Verified Successfully!");
-    } catch (error) {
-      console.error("Error verifying insurance:", error);
-      alert(`Insurance verification failed: ${error.reason || "Unknown error"}`);
-    }
-  };
-  const toggleRole = () => setRole(role === "buyer" ? "seller" : "buyer");
-
-  
-
-  const fetchEscrowDetails = async () => {
-    if (!escrowId) return alert("Please enter the escrow ID.");
-  
-    const contract = await getGAEHEscrowContract();
-    try {
-      // Convert escrowId to a number if it's stored as a string
-      const details = await contract.escrows(parseInt(escrowId));
-      setEscrowDetails(details);
-      alert("Escrow details fetched successfully!");
-    } catch (error) {
-      console.error("Error fetching escrow details:", error);
-      alert("Failed to fetch escrow details.");
-    }
-  };
-
-  
-  const imageStyle = {
-    width: '100%',
-    maxWidth: '150px', // Limit the size of the image
-    marginTop: '10px',
-    borderRadius: '10px', // Optional: add rounded corners
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-  };
-  /*
-  {escrowDetails && (
-    <div>
-      <h3>Escrow Details:</h3>
-      <p><strong>Buyer:</strong> {escrowDetails.buyer}</p>
-      <p><strong>Seller:</strong> {escrowDetails.seller}</p>
-      <p><strong>Amount:</strong> {formatUnits(escrowDetails.amount, "ether")} ETH</p>
-      <p><strong>Adjusted Price (USD):</strong> {escrowDetails.adjustedPrice || "Not adjusted yet"}</p>
-      <p><strong>Status:</strong> {escrowDetails.status}</p>
-      <p><strong>Last Price Update:</strong> {escrowDetails.lastPriceUpdate}</p>
-    </div>
-  )}*/
- //              <button style={buttonStyle} onClick={verifyInsurance}>Verify Insurance</button>
-
-  
-  return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '20px' }}>
-      {/* Main Content Area for Escrow Management */}
-      <div style={{ width: '60%' }}>
-
-      {/* Role Toggle Button */}
-<div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
-  <button onClick={toggleRole} style={buttonStyle}>
-    Switch to {role === "buyer" ? "Seller" : "Buyer"} View
-  </button>
-</div>
-        
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-  {/* Buy Now Section 1 */}
-  <div style={{ width: '30%', textAlign: 'center' }}>
-    <img
-      src="/image2.png" // First image
-      alt="Buy Now Option 1"
-      style={imageStyle}
-    />
-    <input
-      placeholder="Amount (C2FLR)"
-      value={amount}
-      onChange={(e) => setAmount(e.target.value)}
-      style={{
-        width: '80%',
-        padding: '8px',
-        borderRadius: '5px',
-        border: '1px solid #ddd',
-        marginTop: '10px',
-      }}
-    />
-    <button style={buttonStyle} onClick={approveStablecoin}>Buy Now!</button>
-  </div>
-
-  {/* Buy Now Section 2 */}
-  <div style={{ width: '30%', textAlign: 'center' }}>
-    <img
-      src="/image3.png" // Second image
-      alt="Buy Now Option 2"
-      style={imageStyle}
-    />
-    <input
-      placeholder="Amount (C2FLR)"
-      value={amount}
-      onChange={(e) => setAmount(e.target.value)}
-      style={{
-        width: '80%',
-        padding: '8px',
-        borderRadius: '5px',
-        border: '1px solid #ddd',
-        marginTop: '10px',
-      }}
-    />
-    <button style={buttonStyle} onClick={approveStablecoin}>Buy Now!</button>
-  </div>
-
-  {/* Buy Now Section 3 */}
-  <div style={{ width: '30%', textAlign: 'center' }}>
-    <img
-      src="/image4.png" // Third image
-      alt="Buy Now Option 3"
-      style={imageStyle}
-    />
-    <input
-      placeholder="Amount (C2FLR)"
-      value={amount}
-      onChange={(e) => setAmount(e.target.value)}
-      style={{
-        width: '80%',
-        padding: '8px',
-        borderRadius: '5px',
-        border: '1px solid #ddd',
-        marginTop: '10px',
-      }}
-    />
-    <button style={buttonStyle} onClick={approveStablecoin}>Buy Now!</button>
-  </div>
-</div>
-
-        
-        {/* Create Escrow Button */}
-        <button style={{ ...buttonStyle, marginTop: '20px' }} onClick={createEscrow}>Create Escrow</button>
-
-        {/* Additional controls for buyer/seller */}
-        <div>
-          <input
-            placeholder="Escrow ID"
-            value={escrowId}
-            onChange={(e) => setEscrowId(e.target.value)}
-            style={{ width: '80%', padding: '8px', borderRadius: '5px', border: '1px solid #ddd', marginTop: '20px' }}
-          />
-          {/* Buttons based on Buyer or Seller Role */}
-          {role === "buyer" && (
-            <>
-              <button style={buttonStyle} onClick={fetchEscrowDetails}>Fetch To See Details</button>
-              <button style={buttonStyle} onClick={adjustPrice}>Adjust Your Price</button>
-
-              <button style={buttonStyle} onClick={cancelEscrow}>Cancel Escrow</button>
-              {/*<button style={buttonStyle} onClick={finalizeEscrow}>Finalize Escrow</button>*/}
-
-            </>
-          )}
+          const price = await contract.carbonTokenPrice();
+          setCarbonTokenPrice(formatUnits(price, 18));
           
-          {role === "seller" && (
+          
+          const projectCount = await contract.projectCounter();
+          const projectList = [];
+          for (let i = 0; i < projectCount; i++) {
+            const project = await contract.projects(i);
+            projectList.push({
+              id: i,
+              name: project.projectName,
+              location: project.projectLocation,
+              estimatedCO2: formatUnits(project.estimatedCO2, 18),
+              minInvestment: formatUnits(project.minInvestment, 18),
+            });
+          }
+          setProjects(projectList);
+         
+          const investment = await contract.totalInvestments(account);  // Assuming this function exists in your contract
+          setTotalInvestment(formatUnits(investment, 18));
+
+          const logs = await contract.queryFilter({});
+          setTransactions(logs.map(log => log.args));
+        } catch (error) {
+          console.error("Error fetching details:", error);
+        }
+      };
+  
+      if (account) fetchDetails();
+    }, [account]);
+  
+    const registerUser = async () => {
+      if (!name || !email) return alert("Please enter name and email.");
+      try {
+        const contract = await getForestFlowContract();
+        const tx = await contract.registerUser(name.trim(), email.trim());
+        await tx.wait();
+        alert("User Registered Successfully!");
+      } catch (error) {
+        console.error("Error registering user:", error);
+        alert(`Transaction failed: ${error.message}`);
+      }
+    };
+  
+  
+    const registerProject = async () => {
+      if (!projectName || !projectLocation || !estimatedCO2 || !minInvestment) {
+        return alert("Please enter all project details.");
+      }
+      try {
+        const contract = await getForestFlowContract();
+        const tx = await contract.listProject(
+          projectName.trim(),
+          projectLocation.trim(),
+          parseEther(estimatedCO2),
+          parseEther(minInvestment)
+        );
+        await tx.wait();
+        alert("Project Registered Successfully!");
+      } catch (error) {
+        console.error("Error registering project:", error);
+        alert(`Transaction failed: ${error.message}`);
+      }
+    };
+    const investInProject = async (projectId) => {
+      try {
+        if (!investmentAmount) return alert("Enter investment amount.");
+        const contract = await getForestFlowContract();
+        const tx = await contract.investInProject(projectId, { value: parseEther(investmentAmount) });
+        await tx.wait();
+        alert("Investment Successful!");
+      } catch (error) {
+        console.error("Error investing in project:", error);
+        alert(`Transaction failed: ${error.message}`);
+      }
+    };
+  
+    const buyCarbonToken = async () => {
+      try {
+        if (!tokenAmount) return alert("Enter token amount.");
+        const contract = await getForestFlowContract();
+        const cost = parseEther((parseFloat(tokenAmount) * parseFloat(carbonTokenPrice)).toString());
+        const tx = await contract.buyCarbonToken(tokenAmount, { value: cost });
+        await tx.wait();
+        alert("Tokens Purchased Successfully!");
+      } catch (error) {
+        console.error("Error buying tokens:", error);
+        alert(`Transaction failed: ${error.message}`);
+      }};
+      return (
+        <div className="forest-manage-container">
+          {/* Header with Toggle */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <h1>Welcome To Forest Flow! </h1>
+            <div>
+              <button
+                onClick={() => setToggleMode("Invest")}
+                style={{
+                  padding: "10px",
+                  marginRight: "5px",
+                  backgroundColor: toggleMode === "Invest" ? "#4CAF50" : "#ccc",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                Investor
+              </button>
+              <button
+                onClick={() => setToggleMode("Farmer")}
+                style={{
+                  padding: "10px",
+                  backgroundColor: toggleMode === "Farmer" ? "#007BFF" : "#ccc",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                Farmer
+              </button>
+            </div>
+          </div>
+      
+          {/* Map Section - Stays Visible in Both Modes */}
+          <div style={{ margin: "20px 0" }}>
+            <ML_Model />
+          </div>
+      
+          {/* Show ONLY for "Invest" Mode */}
+          {toggleMode === "Invest" && (
             <>
-              <button style={buttonStyle} onClick={fetchEscrowDetails}>Fetch To See Details</button>
-              <button style={buttonStyle} onClick={adjustPrice}>Adjust Your Price</button>
-            </>
-            
-          )}
+              {/*<div className="form-section">
+                <h2>Register User</h2>
+                <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                <input placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <button onClick={registerUser}>Register</button>
+              </div>*/}
+              <div style={{
+  backgroundColor: '#222', 
+  color: 'white', 
+  padding: '20px', 
+  textAlign: 'center', 
+  borderRadius: '8px', 
+  marginTop: '20px'
+}}>
+  <h3>Your Carbon Token Balance: {carbonTokenBalance * 10 ** 18} FTK</h3>
+  <h3>Carbon Token Price: {carbonTokenPrice} C2FLR</h3>
+  <h3>Total Investment Made: {totalInvestment} FTK</h3>
+  <div className="project-list" style={{ display: "flex", flexDirection: "row", overflowX: "auto", gap: "20px", whiteSpace: "nowrap" }}>
+  
+</div>
+
+
+</div>
+
+<div>
+  <FlrUsdPrice />
+</div>
+<div>
+  <CarbonInten />
+</div>
+
+<div className="container mx-auto p-6">
+      <CarbonProjects />
+    </div>
+
+    <div className="container mx-auto p-6">
+    <CarbonIntensity/>
+</div>
+
+
+
+
+<div
+  className="project-list"
+  style={{ display: "flex", flexDirection: "row", overflowX: "auto", gap: "20px", whiteSpace: "nowrap" }}
+>
+  {projects.map((project, index) => (
+    <div
+      key={index}
+      className="project-card"
+      style={{
+        width: "300px",
+        textAlign: "center",
+        display: "inline-block",
+        border: "1px solid #ccc",
+        borderRadius: "10px",
+        padding: "10px",
+        backgroundColor: "#f9f9f9",
+      }}
+    >
+      {/* ProjectImage */}
+
+      
+{/* Inside the .map() function */}
+<img
+  src={projectImages[index % projectImages.length]} // Cycles through images
+  alt="Project"
+  className="project-image"
+  style={{ width: "100%", borderRadius: "10px", marginBottom: "10px" }}
+/>
+ 
+      <h3 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "5px", textAlign: "center" }}>
+  {project.name}
+</h3>
+
+{/* Project Details (Centralized) */}
+<div style={{ textAlign: "left" , paddingRight: "80px"}}>
+  <p style={{ fontSize: "14px", color: "#666", marginBottom: "5px" }}>
+    📍 <strong>{project.location}</strong>
+  </p>
+  <p style={{ fontSize: "14px", marginBottom: "5px" }}>
+    🌱 <strong>CO₂ Offset:</strong> {project.estimatedCO2} tons
+  </p>
+  <p style={{ fontSize: "14px", marginBottom: "10px" }}>
+    💰 <strong>Min Investment:</strong> {project.minInvestment} FTK
+  </p>
+</div>
+
+      {/* Investment & Token Purchase Section (Side by Side) */}
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px", paddingRight: "10px" }}>
+        {/* Investment Input & Button */}
+        <div style={{ width: "48%", textAlign: "center" }}>
+          <input
+            type="number"
+            placeholder="Investment Amount"
+            value={investmentAmount}
+            onChange={(e) => setInvestmentAmount(e.target.value)}
+            style={{ width: "100%", padding: "5px", fontSize: "14px", borderRadius: "5px", marginBottom: "5px", textAlign: "center" }}
+          />
+          <br />
+          <button
+            onClick={() => investInProject(project.id)}
+            style={{
+              width: "100%",
+              padding: "8px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              fontSize: "14px",
+              fontWeight: "600",
+              cursor: "pointer",
+            }}
+          >
+            Invest
+          </button>
         </div>
 
-
-        {/* Display Escrow Details if Available */}
-        {escrowDetails && (
-          <div>
-            <h3>Escrow Details:</h3>
-            <p><strong>Buyer:</strong> {escrowDetails.buyer}</p>
-            <p><strong>Seller:</strong> {escrowDetails.seller}</p>
-            <p><strong>Amount:</strong> {formatUnits(escrowDetails.amount, "ether")} C2FLR</p>
-            
-          </div>
-          
-
-        )}
-
+        {/* Token Purchase Input & Button */}
+        <div style={{ width: "48%", textAlign: "center" }}>
+          <input
+            type="number"
+            placeholder="Token Amount"
+            value={tokenAmount}
+            onChange={(e) => setTokenAmount(e.target.value)}
+            style={{ width: "100%", padding: "5px", fontSize: "14px", borderRadius: "5px", marginBottom: "5px", textAlign: "center" }}
+          />
+          <br />
+          <button
+            onClick={buyCarbonToken}
+            style={{
+              width: "100%",
+              padding: "8px",
+              backgroundColor: "#007BFF",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              fontSize: "14px",
+              fontWeight: "600",
+              cursor: "pointer",
+            }}
+          >
+            Buy Tokens
+          </button>
+        </div>
       </div>
-
-      {/* Current Ethereum Price Section on Right Side */}
-      <div style={{
-        width: '30%',
-        padding: '20px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-        background: 'linear-gradient(135deg, rgba(140, 82, 255, 0.3), rgba(92, 225, 107, 0.3))',
-        borderRadius: '15px',
-        boxShadow: '0px 8px 30px rgba(0, 0, 0, 0.3)',
-        backdropFilter: 'blur(10px)',
-        color: 'white',
-        border: '1px solid rgba(255, 255, 255, 0.4)',
-        position: 'fixed',
-        right: '50px',
-        top: '200px',
-        fontFamily: "'Poppins', sans-serif",
-      }}>
-        <h2 style={{
-          fontSize: '1.8rem',
-          marginBottom: '15px',
-          color: '#ffffff',
-          textShadow: '1px 1px 6px rgba(0, 0, 0, 0.6)',
-        }}>Current Ethereum Price</h2>
-
-        {priceData.adjustedPrice !== null && priceData.timestamp !== null ? (
-          <div style={{
-            fontSize: '1.2rem',
-            lineHeight: '1.6',
-            textAlign: 'center',
-          }}>
-            <p><strong>Price:</strong> {priceData.adjustedPrice} USD</p>
-            <p><strong>Timestamp:</strong> {new Date(priceData.timestamp * 1000).toLocaleString()}</p>
-          </div>
-        ) : (
-          <p style={{
-            fontSize: '1.2rem',
-            fontStyle: 'italic',
-            textAlign: 'center',
-          }}>Loading price data...</p>
-        )}
-      </div>
-
-      <div style={{ marginTop: '450px', height: '20px', }}>
-  <Ai/>
-</div>
     </div>
-    
-  );
-};
+  ))}
+</div>
 
-export default EscrowManager;
+             
+      
+             
+            </>
+          )}
+
+
+
+
+      
+          {/* Show ONLY for "Farmer" Mode */}
+          {toggleMode === "Farmer" && (
+            <div className="form-section">
+              <h2>Register Reforestation Project</h2>
+              <input placeholder="Project Name" value={projectName} onChange={(e) => setProjectName(e.target.value)} />
+              <input placeholder="Location" value={projectLocation} onChange={(e) => setProjectLocation(e.target.value)} />
+              <input placeholder="Estimated CO2 Offset" value={estimatedCO2} onChange={(e) => setEstimatedCO2(e.target.value)} />
+              <input placeholder="Minimum Investment" value={minInvestment} onChange={(e) => setMinInvestment(e.target.value)} />
+              <button onClick={registerProject}>Register Project</button>
+            </div>
+          )}
+        </div>
+      );
+    };      
+  
+  export default ForestManage;
+  
+
+
+
+
+

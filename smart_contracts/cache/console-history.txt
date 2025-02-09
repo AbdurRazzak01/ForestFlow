@@ -1,0 +1,252 @@
+await ethers.provider.getCode("0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89");
+npx hardhat verify --network coston2 0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "@flarenetwork/flare-periphery-contracts/coston2/IJsonApiVerification.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+delete globalThis.verifier;
+await ethers.provider.getCode("0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89");
+.exit
+await ethers.provider.getCode("0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89");
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "@flarenetwork/flare-periphery-contracts/coston/IJsonApiVerification.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+delete verifier;
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "@flarenetwork/flare-periphery-contracts/coston2/IJsonApiVerification.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "@flarenetwork/flare-periphery-contracts/coston/IJsonApiVerification.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+.exit
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+npx hardhat console --network coston2
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+npx hardhat compile
+ls artifacts/contracts/CDCarbonIntensity.sol/
+console.log("✅ Verifier Contract Loaded:", verifier);
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+console.log("✅ Verifier Contract Loaded:", verifier);
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+console.log("Contract Code:", code);
+const code = await ethers.provider.getCode("0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89");
+console.log("✅ Verifier Contract Loaded:", verifier);
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+verifier = undefined;
+console.log("✅ Verifier Contract Loaded:", verifier);
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+console.log("✅ Verifier Contract Loaded:", verifier);
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+console.log("✅ Verifier Contract Loaded:", verifier);
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+delete verifier;
+console.log("✅ Verifier Functions:", verifier.interface.functions);
+console.log("✅ Verifier Contract Loaded:", verifier);
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+});
+  }
+    }
+      abi_encoded_data: abiEncodedData
+    responseBody: {
+    },
+      abi_signature: ""
+      postprocessJq: "",
+      url: "https://api.carbonintensity.org.uk/intensity",
+    requestBody: {
+    lowestUsedTimestamp: 1739075400,
+    votingRound: 1,
+    sourceId,
+    attestationType,
+  data: {
+  merkleProof: [],
+await fcdContract.isJsonApiProofValid({
+console.log("✅ Verifier Functions:", await verifier.functions);
+console.log("✅ Verifier Contract Loaded:", verifier);
+);
+  verifierAddress
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification",
+const verifier = await ethers.getContractAt(
+console.log("✅ Verifier Contract Address:", verifierAddress);
+const verifierAddress = await fcdContract.getVerificationHub();
+});
+    }
+        }
+            )
+                )
+                    32
+                    ethers.toUtf8Bytes("67a82f480000000000000000000000000000000000000000000000000000000090"),
+                ethers.zeroPadBytes(
+            abi_encoded_data: ethers.hexlify(
+        responseBody: {
+        },
+            abi_signature: ""
+            postprocessJq: "",
+            url: "https://api.carbonintensity.org.uk/intensity",
+        requestBody: {
+        lowestUsedTimestamp: 1739075400,
+        votingRound: 1,
+        ),
+            ethers.toUtf8Bytes("gov-api"), 32
+        sourceId: ethers.zeroPadBytes(
+        ),
+            ethers.toUtf8Bytes("carbon-intensity"), 32
+        attestationType: ethers.zeroPadBytes(
+    data: {
+    merkleProof: [],
+await fcdContract.isJsonApiProofValid({
+console.log(await verifier.functions);
+console.log("Verifier contract loaded:", verifier);
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification", 
+const verifier = await ethers.getContractAt(
+});
+    }
+        }
+            )
+                ethers.toUtf8Bytes("67a82f480000000000000000000000000000000000000000000000000000000090")
+            abi_encoded_data: ethers.hexlify(
+        responseBody: {
+        },
+            abi_signature: ""
+            postprocessJq: "",
+            url: "https://api.carbonintensity.org.uk/intensity",
+        requestBody: {
+        lowestUsedTimestamp: 1739075400,
+        votingRound: 1, // Convert to number
+        sourceId: ethers.toUtf8Bytes("gov-api"), // Convert to bytes
+        attestationType: ethers.toUtf8Bytes("carbon-intensity"), // Convert to bytes
+    data: {
+    merkleProof: [],
+await fcdContract.isJsonApiProofValid({
+});
+    }
+        }
+            abi_encoded_data: "0x0000000000000000000000000000000000000000000000000000000067a82f480000000000000000000000000000000000000000000000000000000000000090"
+        responseBody: {
+        },
+            abi_signature: ""
+            postprocessJq: "",
+            url: "https://api.carbonintensity.org.uk/intensity",
+        requestBody: {
+        lowestUsedTimestamp: "1739075400",
+        votingRound: "1",
+        sourceId: "0xb4f57a056ea1fff00b6573605034684d1d534da1f525a4887327530df1d01b05",
+        attestationType: "0xe80c771ec70a6f1490816c022749060e9cd86cc431f04a46a4cca7332378d9de",
+    data: {
+    merkleProof: [],
+await verifier.verifyJsonApi({
+);
+  "0x206D83e3a24523De1E43Ab56AC8f7b9b10f6ab89"
+  "contracts/CDCarbonIntensity.sol:IJsonApiVerification", 
+const verifier = await ethers.getContractAt(
+})
+    }
+        }
+            abi_encoded_data: "0x0000000000000000000000000000000000000000000000000000000067a82f480000000000000000000000000000000000000000000000000000000000000090"
+        responseBody: {
+        },
+            abi_signature: ""
+            postprocessJq: "",
+            url: "https://api.carbonintensity.org.uk/intensity",
+        requestBody: {
+        lowestUsedTimestamp: "1739075400",
+        votingRound: "1",
+        sourceId: "0xb4f57a056ea1fff00b6573605034684d1d534da1f525a4887327530df1d01b05",
+        attestationType: "0xe80c771ec70a6f1490816c022749060e9cd86cc431f04a46a4cca7332378d9de",
+    data: {
+    merkleProof: [],
+await fcdContract.isJsonApiProofValid({
+await fcdContract.getVerificationHub()
+await fcdContract.address
+});
+    }
+        }
+            abi_encoded_data: "0x0000000000000000000000000000000000000000000000000000000067a82f480000000000000000000000000000000000000000000000000000000000000090"
+        responseBody: {
+        },
+            abi_signature: ""
+            postprocessJq: "",
+            url: "https://api.carbonintensity.org.uk/intensity",
+        requestBody: {
+        lowestUsedTimestamp: "1739075400",
+        votingRound: "1",
+        sourceId: "0xb4f57a056ea1fff00b6573605034684d1d534da1f525a4887327530df1d01b05",
+        attestationType: "0xe80c771ec70a6f1490816c022749060e9cd86cc431f04a46a4cca7332378d9de",
+    data: {
+    ],
+        "0xa7962bb7dfa2f3cc83cdc65cf9d8117ca21a7f771fb0c817551c60a3eef248af"
+        "0xf8a4acbd8d7e883716dad5f0adebad4c14a97d4d10e8c9ef6afdf35aac2093e9",
+    merkleProof: [
+await fcdContract.isJsonApiProofValid({
+});
+    }
+        }
+            abi_encoded_data: "0x0000000000000000000000000000000000000000000000000000000067a82f480000000000000000000000000000000000000000000000000000000000000090"
+        responseBody: {
+        },
+            abi_signature: ""
+            postprocessJq: "",
+            url: "https://api.carbonintensity.org.uk/intensity",
+        requestBody: {
+        lowestUsedTimestamp: "1739075400",
+        votingRound: "1",
+        sourceId: "0xb4f57a056ea1fff00b6573605034684d1d534da1f525a4887327530df1d01b05",
+        attestationType: "0xe80c771ec70a6f1490816c022749060e9cd86cc431f04a46a4cca7332378d9de",
+    data: {
+    ],
+        "0xa7962bb7dfa2f3cc83cdc65cf9d8117ca21a7f771fb0c817551c60a3eef248af"
+        "0xf8a4acbd8d7e883716dad5f0adebad4c14a97d4d10e8c9ef6afdf35aac2093e9",
+    merkleProof: [
+await contract.isJsonApiProofValid({
+);
+  "0x9272f14E7ba1D0EC90036B9cF7f93073449f9ce0"
+  "contracts/CDCarbonIntensity.sol:FCDCarbonIntensity", 
+const fcdContract = await ethers.getContractAt(
+);
+  "0x9272f14E7ba1D0EC90036B9cF7f93073449f9ce0"
+  "contracts/CDCarbonIntensity.sol:FCDCarbonIntensity", 
+const contract = await ethers.getContractAt(
+const contract = await ethers.getContractAt("FCDCarbonIntensity", "0x9272f14E7ba1D0EC90036B9cF7f93073449f9ce0");

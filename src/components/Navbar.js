@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <img src="/image.png" alt="Flare Escrow Logo" /> {/* Add your logo image path here */}
+        <img src="/image copy 2.png" alt="Flare Escrow Logo" /> {/* Add your logo image path here */}
       </div>
       <div className="navbar-links">
         <a href="#about">About</a>

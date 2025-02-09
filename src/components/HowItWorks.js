@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./../styles/HowItWorks.css"; // or the appropriate path to the CSS file
+import "./../styles/HowItWorks.css"; // Link to updated CSS
 
 // Define steps array
-    const steps = [
-        "Ensures fair, real-time price adjustments.",
-        "Seamless, trustless escrow management.",
-        "Transparent data bridging with on-chain proof.",
-        "Decentralized for high-value asset security."
-    ];
-    
+const steps = [
+  "Ensures fair, real-time price adjustments.",
+  "Seamless, trustless investment.",
+  "AI-powered low-risk investment.",
+  "Save the world with your money!"
+];
 
 const HowItWorks = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -21,18 +20,20 @@ const HowItWorks = () => {
   }, []);
 
   return (
-    <div className="how-it-works">
-      <h2>Why is It The Best?</h2>
-      <div className="steps">
-        <div className="vertical-line"></div> {/* Vertical line connecting nodes */}
-        {steps.map((step, index) => (
-          <div key={index} className={`step ${index === currentStep ? "active" : ""}`}>
-            <div className="node">
-              <span className="tick">✔️</span>
+    <div className="how-it-works-container">
+      <div className="how-it-works">
+        <h2>Why is It The Best?</h2>
+        <div className="steps">
+          <div className="vertical-line"></div> {/* Vertical line connecting nodes */}
+          {steps.map((step, index) => (
+            <div key={index} className={`step ${index === currentStep ? "active" : ""}`}>
+              <div className="node">
+                <span className="tick">✔️</span>
+              </div>
+              <p>{step}</p>
             </div>
-            <p>{step}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

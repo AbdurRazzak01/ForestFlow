@@ -1,5 +1,4 @@
 import React from "react";
-
 const ConnectWallet = ({ setAccount }) => {
   const connectWallet = async () => {
     if (window.ethereum) {
@@ -16,9 +15,9 @@ const ConnectWallet = ({ setAccount }) => {
 
   return (
     <div>
-      <h2>Welcome to FlareX</h2>
-      <p>Real-Time Price Adjusting Escrow,</p>
-<p>Uniquely Powered by Trust and Data Bridging on Flare!</p>
+      <h2>Welcome to ForestFlow</h2>
+      <p>Real-Time Monitoring of Your Reforestation Project!,</p>
+<p>Make Your Best Green Investment DecisioN Ever! </p>
       <button 
         onClick={connectWallet} 
         style={{
@@ -36,7 +35,7 @@ const ConnectWallet = ({ setAccount }) => {
       >
         Connect Wallet
       </button>
-      <img src="/image.png" alt="Decorative Image" className="decorative-image" />
+      <img src="/image copy 2.png" alt="Decorative Image" className="decorative-image" />
     </div>
   );
 };

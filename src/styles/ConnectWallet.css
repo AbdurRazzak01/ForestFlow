@@ -81,23 +81,7 @@
     background-color: #5ce16b;
   }
   
-  /* Tooltip effect on hover */
-  button:hover::after {
-    content: "Connect Your Wallet";
-    position: absolute;
-    bottom: -40px; /* Position below the button */
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: #ffffff;
-    padding: 5px 10px;
-    font-size: 1rem;
-    border-radius: 4px;
-    white-space: nowrap;
-    opacity: 1;
-    visibility: visible;
-  }
-  
+ 
   button::after {
     content: "";
     position: absolute;

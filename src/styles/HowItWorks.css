@@ -1,84 +1,155 @@
+/* Main container positioned on the right 30% */
+.how-it-works-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns content to the right */
+  align-items: center;
+  width: 40%; /* Takes up only 30% of the screen width */
+  height: 100vh; /* Full screen height */
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  z-index: 10;
+}
+
+/* Transparent background */
 .how-it-works {
-    background: rgba(255, 255, 255, 0); /* Transparent background */
-    padding: 50px 20px;
-    padding-right: 100px; /* 100px padding on the right side */
-    border-radius: 20px;
-    color: #0a0a0a;
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
-    animation: fadeIn 1s ease-in-out;
-    position: absolute;
-    right: 10px;
-    top: 300px;
-    width: 30%;
-    transition: transform 0.8s ease;
+  width: 100%; /* Full width within the 30% container */
+  padding: 40px;
+  background: transparent;
+  text-align: left;
+}
+
+/* Responsive heading */
+.how-it-works h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #095f43; /* White text for visibility */
+  margin-bottom: 20px;
+}
+
+/* Steps container */
+.steps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+}
+
+/* Vertical Line */
+.vertical-line {
+  position: absolute;
+  width: 4px;
+  height: 100%;
+  background: #007bff;
+  left: 15px;
+}
+
+/* Each Step */
+.step {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  padding: 15px;
+  margin: 10px 0;
+  background: rgba(255, 255, 255, 0.2); /* Transparent White */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, background 0.3s;
+  opacity: 0.7;
+}
+
+/* Zoom effect on active step */
+.step.active {
+  transform: scale(1.1);
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Circular Node */
+.node {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #007bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #14372a;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+/* Tick inside the node */
+.tick {
+  font-size: 1rem;
+}
+
+/* Step Text */
+.step p {
+  font-size: 1rem;
+  color: #096f44;
+  flex: 1;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 1024px) {
+  .how-it-works-container {
+    width: 40%;
   }
-  
-  .how-it-works h2 {
-    font-size: 2rem; /* Reduced font size */
-    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .how-it-works-container {
+    width: 60%;
+    justify-content: flex-start; /* Align left on smaller screens */
+  }
+
+  .how-it-works {
     text-align: center;
   }
-  
-  .steps {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align items to the left */
-    position: relative;
-    padding-left: 30px; /* Added padding to create space for the vertical line */
-  }
-  
-  .vertical-line {
-    position: absolute;
-    left: 0; /* Move vertical line to the left side */
-    width: 4px;
-    height: 100%;
-    background-color: #f0f0f0;
-    z-index: -1; /* Behind the steps */
-  }
-  
+
   .step {
-    display: flex;
-    align-items: center; /* Align items horizontally */
-    opacity: 0.8;
-    position: relative;
-    margin-bottom: 20px;
-    transition: transform 0.5s ease, opacity 0.5s ease;
-  }
-  
-  .step.active {
-    animation: zoomIn 3s ease forwards;
-    opacity: 1;
-  }
-  
-  @keyframes zoomIn {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-  }
-  
-  .node {
-    width: 20px;
-    height: 20px;
-    background-color: #5ce16b;
-    border-radius: 50%;
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    color: #0a0a0a;
-    font-size: 0.8rem; /* Adjusted size to match smaller text */
-    margin-right: 10px; /* Space between node and text */
-    z-index: 1;
+    text-align: center;
+    padding: 10px;
   }
-  
-  .tick {
-    font-size: 1rem; /* Adjusted font size */
-    margin: 0;
+
+  .node {
+    margin-bottom: 10px;
   }
-  
+
+  .vertical-line {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 480px) {
+  .how-it-works-container {
+    width: 90%;
+  }
+
+  .how-it-works h2 {
+    font-size: 5rem;
+  }
+
+  .step {
+    max-width: 100%;
+    padding: 8px;
+  }
+
+  .node {
+    width: 25px;
+    height: 25px;
+    font-size: 5rem;
+  }
+
   .step p {
-    font-size: 1.5rem; /* Reduced font size */
-    color: #080808;
-    margin: 0;
+    font-size: 5rem;
   }
-  
+}
