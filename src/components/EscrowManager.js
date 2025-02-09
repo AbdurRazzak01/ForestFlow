@@ -22,7 +22,10 @@ import CarbonInten from "./FDCarbonIntensity";
     const [estimatedCO2, setEstimatedCO2] = useState("");
     const [minInvestment, setMinInvestment] = useState("");
     const [transactions, setTransactions] = useState([]);
-    const [totalInvestment, setTotalInvestment] = useState(0);
+  const [totalInvestment, setTotalInvestment] = useState(0);
+  const [flrPrice, setFlrPrice] = useState(0); // Holds FLR Price
+  const [currentCarbonTokenPrice, setCurrentCarbonTokenPrice] = useState(0); // Holds calculated price
+
     const projectImages = [
       "/image copy 2.png",
       "/tree1.png",
@@ -187,8 +190,8 @@ import CarbonInten from "./FDCarbonIntensity";
   marginTop: '20px'
 }}>
   <h3>Your Carbon Token Balance: {carbonTokenBalance * 10 ** 18} FTK</h3>
-  <h3>Carbon Token Price: {carbonTokenPrice} C2FLR</h3>
-  <h3>Total Investment Made: {totalInvestment} FTK</h3>
+  <FlrUsdPrice />
+
   <div className="project-list" style={{ display: "flex", flexDirection: "row", overflowX: "auto", gap: "20px", whiteSpace: "nowrap" }}>
   
 </div>
@@ -196,16 +199,11 @@ import CarbonInten from "./FDCarbonIntensity";
 
 </div>
 
-<div>
-  <FlrUsdPrice />
-</div>
+
 <div>
   <CarbonInten />
 </div>
 
-<div className="container mx-auto p-6">
-      <CarbonProjects />
-    </div>
 
     <div className="container mx-auto p-6">
     <CarbonIntensity/>

@@ -1,37 +1,57 @@
 import React, { useState, useEffect } from "react";
 import { getFlrUsdPrice } from "../utils/contracts"; // Import function from your contract utils
 
-const FlrUsdPrice = () => {
+const FlrUsdPrice = ({ setCurrentCarbonTokenPrice }) => { 
   const [price, setPrice] = useState(null);
-  const [timestamp, setTimestamp] = useState(null);
+  const [timestamp, setTimestamp] = useState("");  // Ensure it's a string
   const [loading, setLoading] = useState(true);
+  const [flrFor50Usd, setFlrFor50Usd] = useState(0);
 
   useEffect(() => {
     const fetchPrice = async () => {
+      console.log("🚀 Fetching FLR/USD price...");
+
       try {
         const result = await getFlrUsdPrice();
-        if (result) {
+        console.log("✅ API Response:", result);
+
+        if (result && result.price && result.timestamp) {
           setPrice(result.price);
-          setTimestamp(new Date(result.timestamp * 1000).toLocaleString()); // Convert timestamp to readable format
+          const carbonTokenPrice = 50 / result.price;
+          setFlrFor50Usd(carbonTokenPrice);
+
+          // **Force React to update timestamp correctly**
+          setTimestamp(prev => (prev !== result.timestamp ? result.timestamp : `${result.timestamp} `));
+
+          console.log("🔄 Updated Timestamp:", result.timestamp);
+        } else {
+          console.error("⚠️ API returned invalid data:", result);
+          setTimestamp("⚠️ Invalid Timestamp");
         }
       } catch (error) {
-        console.error("Error fetching price:", error);
+        console.error("❌ Error fetching price:", error);
+        setTimestamp("❌ Fetch Error");
       }
+
       setLoading(false);
     };
 
     fetchPrice();
   }, []);
 
+  console.log("🖥️ Render: Timestamp state ->", timestamp);
+
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>🔥 FLR/USD Exchange Rate 🔥</h2>
       {loading ? (
         <p style={styles.loading}>Fetching price...</p>
       ) : price ? (
         <div>
-          <p style={styles.price}>1 USD = <strong>{price.toFixed(4)}</strong> FLR</p>
-          <p style={styles.timestamp}>📅 Last Updated: {timestamp}</p>
+          <p style={styles.price}>1 FLR = <strong>${price.toFixed(4)}</strong> USD</p>
+          <p style={styles.price}>Current Price of 1 Carbon Token = <strong>{flrFor50Usd.toFixed(4)}</strong> FLR</p>
+          <p style={styles.timestamp}>
+            📅 Last Updated: {timestamp ? timestamp : "N/A"}
+          </p>
         </div>
       ) : (
         <p style={styles.error}>❌ Failed to fetch price.</p>
@@ -40,7 +60,6 @@ const FlrUsdPrice = () => {
   );
 };
 
-// 🔥 Inline CSS for styling
 const styles = {
   container: {
     backgroundColor: "#222",
@@ -49,14 +68,9 @@ const styles = {
     textAlign: "center",
     borderRadius: "10px",
     width: "100%",
-    maxWidth: "400px",
+    maxWidth: "100%",
     margin: "20px auto",
     boxShadow: "0px 4px 8px rgba(255, 255, 255, 0.1)",
-  },
-  title: {
-    fontSize: "20px",
-    fontWeight: "bold",
-    marginBottom: "10px",
   },
   price: {
     fontSize: "18px",
