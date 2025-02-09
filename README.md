@@ -1,70 +1,92 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+#🌱 Forest Flow - Web3 Carbon Offset Investment Platform
 
-In the project directory, you can run:
+##🌍 Introduction
 
-### `npm start`
+Forest Flow is a blockchain-powered carbon offset investment platform that connects investors and farmers to fund reforestation projects while ensuring real-time tracking of environmental impact.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+##🔹 Key Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Real-time pricing powered by Flare Time Series Oracle (FTSO)
 
-### `npm test`
+On-chain carbon offset tracking with blockchain transparency
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+AI-powered carbon sequestration predictions
 
-### `npm run build`
+Web2 energy data integration via Flare Data Connector (FDC)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Direct investment & NFT-backed carbon credits
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+##📺 Demo & Presentation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Demo Video: https://www.youtube.com/watch?v=hnYNCq0_jBI
 
-### `npm run eject`
+Presentation Slides: https://www.canva.com/design/DAGUtbZ6jUs/akfz8osRcEEG3BqUIgs3AQ/edit?utm_content=DAGUtbZ6jUs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+##🚀 Getting Started
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This project was bootstrapped with Create React App.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+###📌 Prerequisites
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Ensure you have the following installed:
 
-## Learn More
+Node.js (>= 16.0.0)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+npm or yarn
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Metamask or a Web3 Wallet
 
-### Code Splitting
+###📥 Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Clone the repository and install dependencies:
 
-### Analyzing the Bundle Size
+  git clone https://github.com/abdurrazzak01/forest-flow.git
+  cd forest-flow
+  npm install  # or yarn install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+🏃 Running the Application
 
-### Making a Progressive Web App
+Start the local development server:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  npm start
 
-### Advanced Configuration
+Then open http://localhost:3000 in your browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+###🏗️ Building for Production
 
-### Deployment
+To create a production build:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  npm run build
 
-### `npm run build` fails to minify
+This will generate optimized static files in the build folder.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+###🔗 Smart Contract Deployment
+
+Forest Flow uses Hardhat for smart contract deployment:
+
+  npx hardhat compile
+  npx hardhat deploy --network your-network
+
+###🔗 Connecting Wallet
+
+Install Metamask: Metamask
+
+Connect to Flare Testnet/Mainnet
+
+Fund your wallet with FLR test tokens (if testing)
+
+Interact with the DApp
+
+
+
+###📩 Contact & Support
+
+GitHub Issues: Report bugs and suggest features.
+
+Email: abrazzak1101@gmail.com
+
+
+
+🌱 Forest Flow - Making Sustainability Transparent, AI-Driven, and Rewarding!
